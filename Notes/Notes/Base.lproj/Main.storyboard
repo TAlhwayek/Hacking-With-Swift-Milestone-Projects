@@ -44,13 +44,31 @@
                     <view key="view" contentMode="scaleToFill" id="tka-J9-pJc">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Test text" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="q95-0d-LGz">
+                                <rect key="frame" x="16" y="77" width="361" height="754"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="textColor" systemColor="labelColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="iLL-ap-KBe"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="q95-0d-LGz" firstAttribute="top" secondItem="iLL-ap-KBe" secondAttribute="top" constant="18" id="CnG-zE-gF2"/>
+                            <constraint firstItem="q95-0d-LGz" firstAttribute="trailing" secondItem="tka-J9-pJc" secondAttribute="trailingMargin" id="Dl2-Vq-sjx"/>
+                            <constraint firstItem="q95-0d-LGz" firstAttribute="leading" secondItem="tka-J9-pJc" secondAttribute="leadingMargin" id="FTv-vk-mtQ"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="q95-0d-LGz" secondAttribute="bottom" constant="-13" id="XGS-GY-S8I"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="textView" destination="q95-0d-LGz" id="mst-Rc-jRA"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9AM-6p-GA9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2013" y="8"/>
+            <point key="canvasLocation" x="2012.9770992366412" y="7.746478873239437"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="UgA-1T-2yP">
@@ -72,6 +90,9 @@
         </scene>
     </scenes>
     <resources>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

@@ -7,8 +7,9 @@
 
 import UIKit
 
-class ViewController: UITableViewController {
-
+class ViewController: UITableViewController, DetailViewControllerDelegate {
+    
+    
     // Array to store the created notes
     var notesList = [Note]()
     
@@ -17,10 +18,12 @@ class ViewController: UITableViewController {
         
         title = "Notes"
         
-        // Compose a new note
+        // Create a new note
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(addNote))
+        
+        
     }
-
+    
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return notesList.count
@@ -36,14 +39,39 @@ class ViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let detailVC = storyboard?.instantiateViewController(withIdentifier: "Details") as? DetailViewController {
             let note = notesList[indexPath.row]
+            detailVC.delegate = self
             detailVC.noteTitle = note.noteTitle
             detailVC.body = note.body
+            detailVC.titleSet = note.titleSet
+            navigationController?.pushViewController(detailVC, animated: true)
         }
     }
     
+    // Create a new note
     @objc func addNote() {
-        
+        if let detailVC = storyboard?.instantiateViewController(withIdentifier: "Details") as? DetailViewController {
+            let note = Note(noteTitle: "", body: "", titleSet: false)
+            navigationController?.pushViewController(detailVC, animated: true)
+            notesList.append(note)
+            detailVC.delegate = self
+            detailVC.indexPath = IndexPath(row: notesList.count - 1, section: 0)
+            tableView.reloadData()
+        }
     }
-
+    
+    // When note is updated in detailVC
+    func didUpdateNote(at indexPath: IndexPath, noteTitle newNoteTitle: String, body newBody: String, titleSet newTitleSet: Bool) {
+        notesList[indexPath.row].noteTitle = newNoteTitle
+        notesList[indexPath.row].body = newBody
+        notesList[indexPath.row].titleSet = newTitleSet
+        tableView.reloadData()
+    }
 }
+
+// Implement the delegate method
+
+
+// TODO:
+// Let user set note title
+// Add a button that allows user to edit note title (in detailVC)
 
