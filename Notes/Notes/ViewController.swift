@@ -67,9 +67,6 @@ class ViewController: UITableViewController, DetailViewControllerDelegate {
     }
 }
 
-// Implement the delegate method
-
-
 // TODO:
 // Save notes
 // Allow note deletion by swiping on it in the table
