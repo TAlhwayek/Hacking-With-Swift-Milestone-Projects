@@ -71,6 +71,6 @@ class ViewController: UITableViewController, DetailViewControllerDelegate {
 
 
 // TODO:
-// Let user set note title
-// Add a button that allows user to edit note title (in detailVC)
+// Save notes
+// Allow note deletion by swiping on it in the table
 

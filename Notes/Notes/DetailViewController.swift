@@ -34,6 +34,8 @@ class DetailViewController: UIViewController, UITextViewDelegate {
             askForTitle()
         }
         
+        // Allow the user to edit the title
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(editTitle))
         
         textView.delegate = self
         // Either load body, or place placeholder
@@ -58,6 +60,22 @@ class DetailViewController: UIViewController, UITextViewDelegate {
         titleAC.addAction(submitTitle)
         present(titleAC, animated: true)
         
+    }
+    
+    @objc func editTitle() {
+        let titleAC = UIAlertController(title: "Enter a title", message: nil, preferredStyle: .alert)
+        titleAC.addTextField()
+        
+        // Grab title from text field
+        let submitTitle = UIAlertAction(title: "Set title", style: .default) { [weak self, weak titleAC] _ in
+            guard let title = titleAC?.textFields?[0].text else { return }
+            self?.setTitle(title)
+            self?.saveChanges()
+        }
+        
+        titleAC.addAction(submitTitle)
+        titleAC.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        present(titleAC, animated: true)
     }
     
     
