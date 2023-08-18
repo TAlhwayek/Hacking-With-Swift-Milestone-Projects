@@ -10,11 +10,9 @@ import UIKit
 class Note: NSObject {
     var noteTitle: String
     var body: String
-    var titleSet: Bool
     
-    init(noteTitle: String, body: String, titleSet: Bool) {
+    init(noteTitle: String, body: String) {
         self.noteTitle = noteTitle
         self.body = body
-        self.titleSet = titleSet
     }
 }

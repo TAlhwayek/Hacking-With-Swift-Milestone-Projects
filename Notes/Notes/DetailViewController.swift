@@ -8,7 +8,7 @@
 import UIKit
 
 protocol DetailViewControllerDelegate: AnyObject {
-    func didUpdateNote(at indexPath: IndexPath, noteTitle newNoteTitle: String, body newBody: String, titleSet newTitleSet: Bool)
+    func didUpdateNote(at indexPath: IndexPath, noteTitle newNoteTitle: String, body newBody: String)
 }
 
 
@@ -23,7 +23,6 @@ class DetailViewController: UIViewController, UITextViewDelegate {
     }
     
     var body: String?
-    var titleSet: Bool?
     
     weak var delegate: DetailViewControllerDelegate?
     var indexPath: IndexPath?
@@ -31,10 +30,10 @@ class DetailViewController: UIViewController, UITextViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if !(titleSet ?? false) {
+        if noteTitle == nil {
             askForTitle()
         }
-
+        
         
         textView.delegate = self
         // Either load body, or place placeholder
@@ -51,7 +50,6 @@ class DetailViewController: UIViewController, UITextViewDelegate {
         let submitTitle = UIAlertAction(title: "Set title", style: .default) { [weak self, weak titleAC] _ in
             guard let title = titleAC?.textFields?[0].text else { return }
             
-            self?.titleSet = true
             self?.body = ""
             self?.setTitle(title)
             self?.saveChanges()
@@ -62,11 +60,11 @@ class DetailViewController: UIViewController, UITextViewDelegate {
         
     }
     
- 
+    
     // Save all changes
     func saveChanges() {
-        if let indexPath = indexPath, let newNoteTitle = noteTitle, let newBody = body, let newTitleSet = titleSet {
-            delegate?.didUpdateNote(at: indexPath, noteTitle: newNoteTitle, body: newBody, titleSet: newTitleSet)
+        if let indexPath = indexPath, let newNoteTitle = noteTitle, let newBody = body {
+            delegate?.didUpdateNote(at: indexPath, noteTitle: newNoteTitle, body: newBody)
             print("CHANGES SAVED")
         }
     }
@@ -78,21 +76,21 @@ class DetailViewController: UIViewController, UITextViewDelegate {
     }
     
     //MARK: - Text View Functions
-     
-     // Change font color back to black and clear placeholder when note is being edited
-     func textViewDidBeginEditing(_ textView: UITextView) {
-         if textView.text == "Enter your note here..." {
-             textView.text = ""
-             textView.textColor = UIColor.black
-         }
-     }
-
-     // Save body text when user is done
-     func textViewDidEndEditing(_ textView: UITextView) {
-             body = textView.text
-             saveChanges()
-     }
-     
+    
+    // Change font color back to black and clear placeholder when note is being edited
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.text == "Enter your note here..." {
+            textView.text = ""
+            textView.textColor = UIColor.black
+        }
+    }
+    
+    // Save body text when user is done
+    func textViewDidEndEditing(_ textView: UITextView) {
+        body = textView.text
+        saveChanges()
+    }
+    
     // Check if body is saved and load it in
     // Else, place placeholder
     func initializeTextView() {
