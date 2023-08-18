@@ -60,10 +60,9 @@ class ViewController: UITableViewController, DetailViewControllerDelegate {
     }
     
     // When note is updated in detailVC
-    func didUpdateNote(at indexPath: IndexPath, noteTitle newNoteTitle: String, body newBody: String, titleSet newTitleSet: Bool) {
+    func didUpdateNote(at indexPath: IndexPath, noteTitle newNoteTitle: String, body newBody: String) {
         notesList[indexPath.row].noteTitle = newNoteTitle
         notesList[indexPath.row].body = newBody
-        notesList[indexPath.row].titleSet = newTitleSet
         tableView.reloadData()
     }
 }
