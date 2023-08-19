@@ -86,5 +86,5 @@ class ViewController: UITableViewController, DetailViewControllerDelegate {
 
 // TODO:
 // Save notes
-// Allow note deletion by swiping on it in the table
+// Fix keyboard issue
 
