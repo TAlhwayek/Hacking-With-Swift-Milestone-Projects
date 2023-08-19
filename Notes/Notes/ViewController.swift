@@ -21,14 +21,14 @@ class ViewController: UITableViewController, DetailViewControllerDelegate {
         // Create a new note
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(addNote))
         
-        
     }
     
-    
+    // Show needed number of rows
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return notesList.count
     }
     
+    // Display titles in rows
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Note", for: indexPath)
         let note = notesList[indexPath.row]
@@ -36,6 +36,8 @@ class ViewController: UITableViewController, DetailViewControllerDelegate {
         return cell
     }
     
+    // When a row is selected
+    // Send data from array to detailVC
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let detailVC = storyboard?.instantiateViewController(withIdentifier: "Details") as? DetailViewController {
             let note = notesList[indexPath.row]
@@ -64,6 +66,14 @@ class ViewController: UITableViewController, DetailViewControllerDelegate {
         notesList[indexPath.row].noteTitle = newNoteTitle
         notesList[indexPath.row].body = newBody
         tableView.reloadData()
+    }
+    
+    // Delete note by swiping on it
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            notesList.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        }
     }
 }
 

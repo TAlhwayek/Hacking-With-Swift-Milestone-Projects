@@ -62,6 +62,7 @@ class DetailViewController: UIViewController, UITextViewDelegate {
         
     }
     
+    // When the edit button is pressed, allowing the user to edit the note's title
     @objc func editTitle() {
         let titleAC = UIAlertController(title: "Enter a title", message: nil, preferredStyle: .alert)
         titleAC.addTextField()
@@ -83,7 +84,6 @@ class DetailViewController: UIViewController, UITextViewDelegate {
     func saveChanges() {
         if let indexPath = indexPath, let newNoteTitle = noteTitle, let newBody = body {
             delegate?.didUpdateNote(at: indexPath, noteTitle: newNoteTitle, body: newBody)
-            print("CHANGES SAVED")
         }
     }
     
