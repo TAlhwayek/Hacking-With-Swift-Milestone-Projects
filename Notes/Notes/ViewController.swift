@@ -16,6 +16,8 @@ class ViewController: UITableViewController, DetailViewControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Set background color to a color similar to a sticky note's color
+        view.backgroundColor = UIColor(red: 1, green: 1, blue: 204.0/255.0, alpha: 1.0)
         title = "Notes"
         
         // Create a new note
@@ -32,7 +34,12 @@ class ViewController: UITableViewController, DetailViewControllerDelegate {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Note", for: indexPath)
         let note = notesList[indexPath.row]
+        // Make the cell the same color as the background
+        cell.backgroundColor = UIColor(red: 1, green: 1, blue: 204.0/255.0, alpha: 1.0)
         cell.textLabel?.text = note.noteTitle
+        cell.textLabel?.font = .boldSystemFont(ofSize: 16)
+        cell.detailTextLabel?.numberOfLines = 1
+        cell.detailTextLabel?.text = note.body
         return cell
     }
     

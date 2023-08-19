@@ -30,6 +30,11 @@ class DetailViewController: UIViewController, UITextViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Set background color to a color similar to a sticky note's color
+        view.backgroundColor = UIColor(red: 1, green: 1, blue: 204.0/255.0, alpha: 1.0)
+        // Also set the text view's background color
+        textView.backgroundColor = UIColor(red: 1, green: 1, blue: 204.0/255.0, alpha: 1.0)
+        
         if noteTitle == nil {
             askForTitle()
         }
