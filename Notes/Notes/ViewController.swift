@@ -23,6 +23,7 @@ class ViewController: UITableViewController, DetailViewControllerDelegate {
         // Create a new note
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(addNote))
         
+        loadFromJSON()
     }
     
     // Show needed number of rows
@@ -73,6 +74,7 @@ class ViewController: UITableViewController, DetailViewControllerDelegate {
         notesList[indexPath.row].noteTitle = newNoteTitle
         notesList[indexPath.row].body = newBody
         tableView.reloadData()
+        saveToJSON()
     }
     
     // Delete note by swiping on it
@@ -80,11 +82,41 @@ class ViewController: UITableViewController, DetailViewControllerDelegate {
         if editingStyle == .delete {
             notesList.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
+            saveToJSON()
+        }
+    }
+    
+    //MARK: - Functions that save/load stored data
+    
+    // Save notes
+    func saveToJSON() {
+        let encoder = JSONEncoder()
+        if let encoded = try? encoder.encode(notesList) {
+            if let notesJSON = String(data: encoded, encoding: .utf8) {
+                // Save the notesJSON string to a file
+                let jsonURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("notes.json")
+                do {
+                    try notesJSON.write(to: jsonURL, atomically: true, encoding: .utf8)
+                    // Data has been saved to "notes.json"
+                } catch {
+                    print("Error saving JSON to file: \(error)")
+                }
+            }
+        }
+    }
+    
+    // Load saved notes
+    func loadFromJSON() {
+        let jsonURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("notes.json")
+        if let jsonData = try? Data(contentsOf: jsonURL) {
+            let decoder = JSONDecoder()
+            if let decodedNotesList = try? decoder.decode([Note].self, from: jsonData) {
+                notesList = decodedNotesList
+            } else {
+                print("Error decoding JSON data")
+            }
+        } else {
+            print("Error loading JSON data from file")
         }
     }
 }
-
-// TODO:
-// Save notes
-// Fix keyboard issue
-
