@@ -19,7 +19,8 @@ class ViewController: UITableViewController {
         
         // Add navbar items
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addItem))
-        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(clearList))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Clear", style: .plain, target: self, action: #selector(clearList))
+        
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -43,13 +44,22 @@ class ViewController: UITableViewController {
             self?.add(item)
         }
         ac.addAction(addItem)
+        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         present(ac, animated: true)
     }
     
     // When clear button is pressed
     @objc func clearList() {
-        shoppingList.removeAll()
-        tableView.reloadData()
+        // Present alert controller to avoid mistakes
+        let clearAC = UIAlertController(title: "Clear list?", message: "This action cannot be undone.", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Yes", style: .default) { _ in
+            self.shoppingList.removeAll()
+            self.tableView.reloadData()
+        }
+        clearAC.addAction(okAction)
+        clearAC.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        present(clearAC, animated: true)
+        
     }
     
     // Add item and refresh table
@@ -66,7 +76,7 @@ class ViewController: UITableViewController {
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }
-    
-    
 }
 
+// TODO:
+// Save data?
