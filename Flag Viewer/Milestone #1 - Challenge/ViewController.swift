@@ -60,6 +60,9 @@ class ViewController: UITableViewController {
         
         // Bonus
         cell.imageView?.image = UIImage(named: flags[indexPath.row])
+        cell.imageView?.layer.borderColor = UIColor.lightGray.cgColor
+        cell.imageView?.layer.borderWidth = 0.3
+        
         return cell
     }
     
